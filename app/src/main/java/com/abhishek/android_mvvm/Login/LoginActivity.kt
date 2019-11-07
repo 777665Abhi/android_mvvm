@@ -1,5 +1,6 @@
 package com.abhishek.android_mvvm.Login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.abhishek.android_mvvm.Observer.ScreenState
 import com.abhishek.android_mvvm.R
+import com.abhishek.android_mvvm.home.HomeActivity
+import com.abhishek.android_mvvm.utils.BasicFunction
 import kotlinx.android.synthetic.main.activity_main.*
 
 class LoginActivity : AppCompatActivity() {
@@ -40,8 +43,14 @@ class LoginActivity : AppCompatActivity() {
         when (renderState) {
             LoginState.ErrorPassword -> etPass.error = "Password error"
             LoginState.ErrorUserame -> etUser.error = "Username error"
-            LoginState.ErrorServer -> Toast.makeText(this,"Error to login",Toast.LENGTH_SHORT).show()
-    LoginState.Sucess->Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show()
+            LoginState.ErrorServer -> Toast.makeText(
+                this,
+                "Error to login",
+                Toast.LENGTH_SHORT
+            ).show()
+            LoginState.Sucess -> {
+                BasicFunction.moveNextScreen(this,HomeActivity::class.java)
+            }
         }
     }
 
