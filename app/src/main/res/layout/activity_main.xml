@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="User Name"
+                android:text="abhi"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="40" />
@@ -44,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:text="1234"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLength="30" />

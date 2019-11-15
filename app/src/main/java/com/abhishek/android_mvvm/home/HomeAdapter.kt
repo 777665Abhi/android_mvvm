@@ -1,24 +1,56 @@
 package com.abhishek.android_mvvm.home
 
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
 
-class HomeAdapter(): RecyclerView.Adapter<HomeAdapter.ViewHolder>()
-{
+import androidx.recyclerview.widget.RecyclerView
+import com.abhishek.android_mvvm.R
+import com.abhishek.android_mvvm.network.respones.ResponsePost
+
+class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+
+    /**1 Need to pass data in constructor*/
+    private var context: Context? = null
+    private var postList: ArrayList<ResponsePost>
+
+    constructor(
+        context: Context,
+        farmerList: ArrayList<ResponsePost>
+    ) : super() {
+        this.context = context
+        this.postList = farmerList
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return ViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.row_post_adapter,
+                parent,
+                false
+            )
+        )
+
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return  postList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.tvPostTittle.text=postList[position].tittle.toString()
+        holder.tvPost.text=postList[position].body.toString()
+        holder.tvPostDetail.text="Post by user :"+postList[position].userId.toString()
+
+
     }
 
-    class ViewHolder (view: View):RecyclerView.ViewHolder(view){
-
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var tvPostTittle = view.findViewById<TextView>(R.id.tvPostTittle)
+        var tvPost = view.findViewById<TextView>(R.id.tvPost)
+        var tvPostDetail = view.findViewById<TextView>(R.id.tvPostDetail)
     }
 }

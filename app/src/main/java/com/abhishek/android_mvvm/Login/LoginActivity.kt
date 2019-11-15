@@ -18,20 +18,25 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        /**1 INSTANCE OF VM*/
         loginVM = ViewModelProviders.of(
             this,
             LoginViewModelFactory(LoginInteracter(this))
         )[LoginViewModel::class.java]
-        loginVM!!.loginState.observe(::getLifecycle, ::updateUI)
 
+        /**2 OBSERVING THE STATE OF LOGIN*/
+        loginVM!!.loginState.observe(::getLifecycle, ::updateUI)
         bnLogin.setOnClickListener { onClick() }
 
     }
 
+    /***CALL THE CLICK METHOD OF VM ONCLICK OF BUTTON*/
     fun onClick() {
         loginVM!!.onClickLogin(etUser.text.toString(), etPass.text.toString())
     }
 
+    /**ACTIONS CORRESPONDING TO STATE*/
     private fun updateUI(screenState: ScreenState<LoginState>?) {
         when (screenState) {
             ScreenState.Loading -> progress.visibility = View.VISIBLE
@@ -49,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             LoginState.Sucess -> {
-                BasicFunction.moveNextScreen(this,HomeActivity::class.java)
+                BasicFunction.moveNextScreen(this, HomeActivity::class.java)
             }
         }
     }

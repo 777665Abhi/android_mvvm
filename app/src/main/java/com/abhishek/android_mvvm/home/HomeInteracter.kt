@@ -18,15 +18,35 @@ class HomeInteracter(private val context: Context) {
                 listener.apiError()
             }
 
-            override fun onResponse(call: Call<ArrayList<ResponsePost>>, response: Response<ArrayList<ResponsePost>>) {
-                listener.apiSuccess(response)
+            override fun onResponse(
+                call: Call<ArrayList<ResponsePost>>,
+                response: Response<ArrayList<ResponsePost>>
+            ) {
 
+
+                if (response.isSuccessful) {
+
+
+                    listener.apiSuccess(response.body()!!)
+                }
             }
         })
     }
 
+    fun addItem(listener: HomeInteracterCallback)
+    {
+        var addItem:ResponsePost= ResponsePost()
+        addItem!!.body="Helllo"
+        addItem!!.tittle="bhfbf"
+        addItem.id="jgf"
+        addItem.userId="hbhjfh"
+        listener.addItem(addItem)
+    }
+
     interface HomeInteracterCallback {
-        fun apiSuccess(response: Response<ArrayList<ResponsePost>>)
+        fun apiSuccess(postList: ArrayList<ResponsePost>)
         fun apiError()
+        fun addItem(addItem:ResponsePost)
+        // fun apiSuccess(homeAdapter: HomeAdapter)
     }
 }

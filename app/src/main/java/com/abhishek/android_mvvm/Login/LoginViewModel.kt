@@ -9,36 +9,36 @@ import com.abhishek.android_mvvm.Observer.ScreenState
 class LoginViewModel(private val loginInteractor: LoginInteracter) : ViewModel(),
     LoginInteracter.LoginInteracterCallback {
 
-    /*LiveData*/
+    /**DECLARE LIVEDATA*/
     private val _loginState: MutableLiveData<ScreenState<LoginState>> = MutableLiveData()
 
-    /*Declare public Getter for LD*/
+    /**GETTER TO GET THE PRIVATE LD*/
     val loginState: LiveData<ScreenState<LoginState>>
         get() = _loginState
 
-
-    fun onClickLogin( username:String,password:String)
-    {
+    /**ONCLICK PASS THE CALL TO INTERACTOR METHOD (FORWARD FLOW)*/
+    fun onClickLogin(username: String, password: String) {
         _loginState.value = ScreenState.Loading
         loginInteractor.loginIn(username, password, this)
     }
 
+    /**OVERRIDE METHODS OF INTERACTER (BACKWARD FLOW)*/
     override fun onErrorUser() {
-        _loginState.value=ScreenState.Render(LoginState.ErrorUserame)
+        _loginState.value = ScreenState.Render(LoginState.ErrorUserame)
     }
 
     override fun onErrorPass() {
-        _loginState.value=ScreenState.Render(LoginState.ErrorPassword)
+        _loginState.value = ScreenState.Render(LoginState.ErrorPassword)
 
     }
 
     override fun onSucces() {
-        _loginState.value=ScreenState.Render(LoginState.Sucess)
+        _loginState.value = ScreenState.Render(LoginState.Sucess)
 
     }
 
-    override fun onServerError(msg:String) {
-        _loginState.value=ScreenState.Render(LoginState.ErrorServer)
+    override fun onServerError(msg: String) {
+        _loginState.value = ScreenState.Render(LoginState.ErrorServer)
     }
 
 

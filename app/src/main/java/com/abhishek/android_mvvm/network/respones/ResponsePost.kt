@@ -7,7 +7,7 @@ class ResponsePost {
     var id:String?=null
     @SerializedName("userId")
     var userId:String?=null
-    @SerializedName("tittle")
+    @SerializedName("title")
     var tittle:String?=null
     @SerializedName("body")
     var body:String?=null

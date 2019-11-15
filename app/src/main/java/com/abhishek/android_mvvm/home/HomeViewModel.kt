@@ -11,24 +11,43 @@ import retrofit2.Response
 class HomeViewModel(private val homeInteractor: HomeInteracter) : ViewModel(),
     HomeInteracter.HomeInteracterCallback {
 
-    private val _postState: MutableLiveData<ScreenState<HomeState>> = MutableLiveData()
-    var postList:MutableLiveData<List<ResponsePost>> = MutableLiveData()
 
-    /*Declare public Getter for LD*/
+    /**LD INSTANCE*/
+    private val _postState: MutableLiveData<ScreenState<HomeState>> = MutableLiveData()
+    private val _postList: MutableLiveData<ArrayList<ResponsePost>> = MutableLiveData()
+//    private val _postAdapter: MutableLiveData<HomeAdapter> = MutableLiveData()
+
+
+    /**Declare public Getter for LD*/
     val homeState: LiveData<ScreenState<HomeState>>
         get() = _postState
+    val postList: LiveData<ArrayList<ResponsePost>>
+        get() = _postList
+
+//    val postAdapter: LiveData<HomeAdapter>
+//        get() = _postAdapter
 
     fun postsApiHit() {
         homeInteractor.postApiHitInt(this)
     }
 
-    override fun apiSuccess(response: Response<ArrayList<ResponsePost>>) {
-//        postList.value=response
+    fun addItem()
+    {
+        homeInteractor.addItem(this)
+
+    }
+    override fun apiSuccess(postList: ArrayList<ResponsePost>) {
+        _postList.value=postList
         _postState.value = ScreenState.Render(HomeState.apiSuccess)
     }
 
     override fun apiError() {
         _postState.value = ScreenState.Render(HomeState.apiError)
+    }
+
+    override fun addItem(addItem: ResponsePost) {
+        _postList.value!!.add(addItem)
+        _postState.value = ScreenState.Render(HomeState.updateList)
     }
 
     class HomeViewModelFactory(private val loginInteractor: HomeInteracter) :
